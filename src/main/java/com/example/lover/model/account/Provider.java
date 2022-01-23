@@ -17,7 +17,7 @@ public class Provider {
     private Long id;
     private String name;
     private int yearOfBirth;
-    private String sex;
+    private String gender;
     private String city;
     private String country;
     @OneToMany(fetch = FetchType.EAGER)
