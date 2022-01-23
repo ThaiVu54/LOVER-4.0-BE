@@ -25,4 +25,15 @@ public class User {
     private Boolean isBlock;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
+
+    public User(String username, String email, String encode, String avatar) {
+        this.username = username;
+        this.email = email;
+        this.password = encode;
+        this.avatar = avatar;
+    }
+
+    public User() {
+
+    }
 }

@@ -22,19 +22,19 @@ public class UserPrinciple implements UserDetails {
     private String email;
     private int phoneNumber;
     private String avatar;
-    private LocalDate joinDate;
-    private Boolean isBlock;
+//    private LocalDate joinDate;
+//    private Boolean isBlock;
     private Collection<? extends GrantedAuthority> roles;
 
-    public UserPrinciple(Long id, String username, String password, String email, int phoneNumber, String avatar, LocalDate joinDate, Boolean isBlock, Collection<? extends GrantedAuthority> roles) {
+    public UserPrinciple(Long id, String username, String password, String email, int phoneNumber, String avatar, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
-        this.joinDate = joinDate;
-        this.isBlock = isBlock;
+//        this.joinDate = joinDate;
+//        this.isBlock = isBlock;
         this.roles = roles;
     }
 
@@ -50,8 +50,8 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(),
                 user.getPhoneNumber(),
                 user.getAvatar(),
-                user.getJoinDate(),
-                user.getIsBlock(),
+//                user.getJoinDate(),
+//                user.getIsBlock(),
                 authorities
         );
     }
@@ -93,13 +93,13 @@ public class UserPrinciple implements UserDetails {
         return true;
     }
 
-    public Boolean getIsBlock() {
-        return isBlock;
-    }
-
-    public void setIsBlock(Boolean block) {
-        isBlock = block;
-    }
+//    public Boolean getIsBlock() {
+//        return isBlock;
+//    }
+//
+//    public void setIsBlock(Boolean block) {
+//        isBlock = block;
+//    }
 
     public Long getId() {
         return id;
@@ -142,13 +142,13 @@ public class UserPrinciple implements UserDetails {
         this.avatar = avatar;
     }
 
-    public LocalDate getJoinDate() {
-        return joinDate;
-    }
-
-    public void setJoinDate(LocalDate joinDate) {
-        this.joinDate = joinDate;
-    }
+//    public LocalDate getJoinDate() {
+//        return joinDate;
+//    }
+//
+//    public void setJoinDate(LocalDate joinDate) {
+//        this.joinDate = joinDate;
+//    }
 
 
 

@@ -30,58 +30,15 @@ import java.util.Set;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserDetailServiceImpl userDetailService;
-
+    IRoleService roleService;
     @Autowired
-    private JwtAuthTokenFilter jwtAuthTokenFilter;
-
+    IUserService userService;
     @Autowired
-    JwtAuthEntryPoint jwtAuthEntryPoint;
-
+    private UserDetailServiceImpl userDetailService;
     @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IRoleService roleService;
-
-//    ham xét mac dinh khoi tao tai khoan admin khi chua dang ky
-    @PostConstruct
-    public void init(){
-        List<User> users = (List<User>) userService.findAll();
-        List<Role> roles = (List<Role>) roleService.findAll();
-        if (roles.isEmpty()){
-            Role roleAdmin = new Role();
-            roleAdmin.setId(1L);
-            roleAdmin.setName(RoleName.ROLE_ADMIN);
-            roleService.save(roleAdmin);
-
-            Role roleUser = new Role();
-            roleUser.setId(2L);
-            roleUser.setName(RoleName.ROLE_USER);
-            roleService.save(roleUser);
-
-            Role roleProvider = new Role();
-            roleProvider.setId(3L);
-            roleProvider.setName(RoleName.ROLE_PROVIDER);
-            roleService.save(roleProvider);
-        }
-        if (users.isEmpty()){
-            User userAdmin = new User();
-            Set<Role> roleSet = new HashSet<>();
-            roleSet.add(new Role(1L, RoleName.ROLE_ADMIN));
-            userAdmin.setUsername("admin");
-            userAdmin.setPassword(passwordEncoder().encode("123456"));
-            userAdmin.setRoles(roleSet);
-            userService.save(userAdmin);
-        }
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private JwtAuthEntryPoint jwtAuthEntryPoint;
 
     @Bean
     public JwtAuthTokenFilter jwtAuthTokenFilter() {
@@ -94,23 +51,60 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
     @Bean
-    public CustomAccessDeniedHandler customAccessDeniedHandler(){
-        return new CustomAccessDeniedHandler();
-    }
-
-    @Bean
-    public RestAuthenticationEntryPoint restAuthenticationEntryPoint(){
+    public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
     }
 
+    //    ham xét mac dinh khoi tao tai khoan admin khi chua dang ky
+//    @PostConstruct
+//    public void init() {
+//        List<User> users = (List<User>) userService.findAll();
+//        List<Role> roles = (List<Role>) roleService.findAll();
+//        if (roles.isEmpty()) {
+//            Role roleAdmin = new Role();
+//            roleAdmin.setId(1L);
+//            roleAdmin.setName(RoleName.ROLE_ADMIN);
+//            roleService.save(roleAdmin);
+//
+//            Role roleUser = new Role();
+//            roleUser.setId(2L);
+//            roleUser.setName(RoleName.ROLE_USER);
+//            roleService.save(roleUser);
+//
+//            Role roleProvider = new Role();
+//            roleProvider.setId(3L);
+//            roleProvider.setName(RoleName.ROLE_PROVIDER);
+//            roleService.save(roleProvider);
+//        }
+//        if (users.isEmpty()) {
+//            User userAdmin = new User();
+//            Set<Role> roleSet = new HashSet<>();
+//            roleSet.add(new Role(1L, RoleName.ROLE_ADMIN));
+//            userAdmin.setUsername("admin");
+//            userAdmin.setPassword(passwordEncoder().encode("123456"));
+//            userAdmin.setRoles(roleSet);
+//            userService.save(userAdmin);
+//        }
+//    }
+
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception{
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests().antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
