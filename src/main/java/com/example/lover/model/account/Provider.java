@@ -1,9 +1,7 @@
 package com.example.lover.model.account;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +21,7 @@ public class Provider {
     @OneToMany(fetch = FetchType.EAGER)
     private List<Image> images;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Service> services;
+    private List<Services> services;
     private int height;
     private int weight;
     private String interests;

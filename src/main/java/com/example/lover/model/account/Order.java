@@ -23,7 +23,7 @@ public class Order {
     @ManyToOne
     private Provider provider;
     @OneToMany
-    private List<Service> services;
+    private List<Services> services;
     private int totalTime;
     private int hourStart;
     private LocalDate dayStart;
