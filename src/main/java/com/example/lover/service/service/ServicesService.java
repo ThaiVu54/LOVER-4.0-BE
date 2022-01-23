@@ -6,12 +6,16 @@ import com.example.lover.repository.IServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ServicesService implements IServiceService{
-    @Autowired private IServiceRepository serviceRepository;
+@Service
+public class ServicesService implements IServiceService {
+    @Autowired
+    private IServiceRepository serviceRepository;
+
     @Override
     public Iterable<Services> findAllByUser(User user) {
         return serviceRepository.findAllByUser(user);
