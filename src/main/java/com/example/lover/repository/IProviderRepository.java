@@ -22,7 +22,7 @@ public interface IProviderRepository extends JpaRepository<Provider, Long> {
     Page<Provider> findAllByNameContaining(String name, Pageable pageable);
 
     //tim theo user
-    Optional<Provider> findAllByUser(User user);
+    Optional<Provider> findByUser(User user);
 
     //tim theo trang thai hoat dong
     @Query(value = "select c from Provider c where c.isConfirm=?1 and c.isActive=?2")
